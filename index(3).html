@@ -6,9 +6,299 @@
     <title>HackPanel Pro - Dark Web SMM Services</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      body {
+        font-family: 'Share Tech Mono', monospace;
+        background-color: #050505;
+        color: #00ff66;
+        overflow-x: hidden;
+      }
+      .orbitron {
+        font-family: 'Orbitron', sans-serif;
+      }
+      .rajdhani {
+        font-family: 'Rajdhani', sans-serif;
+      }
+      /* Custom scanline effect */
+      body::before {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0; left: 0; bottom: 0; right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        z-index: 99999;
+        opacity: 0.8;
+        pointer-events: none;
+        background-size: 100% 4px, 6px 100%;
+      }
+      /* Hacker matrix glow */
+      .matrix-glow {
+        text-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
+      }
+      .border-glow {
+        box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+      }
+      .border-glow:hover {
+        box-shadow: 0 0 15px rgba(0, 255, 102, 0.5);
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #00ff66;
+        border-radius: 3px;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+
+      // Mock Data for Services
+      const SERVICES_DATA = [
+        { id: 1, name: "Instagram Real Followers [Instant]", category: "Instagram", price: "$0.45", speed: "10k/day", min: 10, max: 50000 },
+        { id: 2, name: "Instagram Premium Likes [Non-Drop]", category: "Instagram", price: "$0.12", speed: "Instant", min: 20, max: 10000 },
+        { id: 3, name: "Free Fire Account Boost & Coins", category: "Gaming", price: "$1.20", speed: "1-2 Hours", min: 1, max: 10 },
+        { id: 4, name: "YouTube High Retention Views", category: "YouTube", price: "$1.80", speed: "5k/day", min: 100, max: 1000000 },
+        { id: 5, name: "Telegram Channel Members [Safe]", category: "Telegram", price: "$0.60", speed: "20k/day", min: 50, max: 200000 },
+        { id: 6, name: "TikTok Viral Video Views", category: "TikTok", price: "$0.02", speed: "Ultra Fast", min: 500, max: 10000000 }
+      ];
+
+      function App() {
+        const [terminalLogs, setTerminalLogs] = useState([
+          "Initializing HackPanel Core Security Protocols...",
+          "Connecting to secure proxy nodes... SUCCESS",
+          "Welcome back, User. Status: Encrypted"
+        ]);
+        const [selectedCategory, setSelectedCategory] = useState("All");
+        const [selectedService, setSelectedService] = useState(SERVICES_DATA[0]);
+        const [link, setLink] = useState("");
+        const [quantity, setQuantity] = useState(100);
+        const [orderLogs, setOrderLogs] = useState([]);
+
+        // Live terminal logs ticker simulation
+        useEffect(() => {
+          const events = [
+            "New incoming order routed via Tor Network...",
+            "Database sync completed with server node-77X",
+            "Bypassing API rate limits... Ok.",
+            "Security layer re-encrypted. 0 vulnerabilities found.",
+            "SMM server ping latency: 42ms"
+          ];
+          const interval = setInterval(() => {
+            const randomLog = events[Math.floor(Math.random() * events.length)];
+            const time = new Date().toLocaleTimeString();
+            setTerminalLogs(prev => [...prev.slice(-4), `[${time}] ${randomLog}`]);
+          }, 7000);
+          return () => clearInterval(interval);
+        }, []);
+
+        const handleOrderSubmit = (e) => {
+          e.preventDefault();
+          if (!link) {
+            alert("Please enter a valid URL/Username link.");
+            return;
+          }
+          
+          const totalPrice = (parseFloat(selectedService.price.replace('$', '')) * (quantity / 1000)).toFixed(4);
+          const time = new Date().toLocaleTimeString();
+          
+          const newLog = `[${time}] SUCCESS: Order for ${quantity}x ${selectedService.name} initialized. Cost: $${totalPrice}. Payload sent.`;
+          setOrderLogs(prev => [newLog, ...prev]);
+          setTerminalLogs(prev => [...prev, `[${time}] EXECUTING ORDER ID: ${Math.floor(Math.random()*900000+100000)}`]);
+          
+          // Reset form field
+          setLink("");
+        };
+
+        const filteredServices = selectedCategory === "All" 
+          ? SERVICES_DATA 
+          : SERVICES_DATA.filter(s => s.category === selectedCategory);
+
+        return (
+          <div className="min-h-screen bg-[#050505] p-3 md:p-6 flex flex-col justify-between">
+            
+            {/* Header / Cyber Banner */}
+            <header className="border-b border-[#00ff66]/30 pb-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+              <div>
+                <h1 className="orbitron text-3xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#00ff66] to-[#00aa44] matrix-glow">
+                  HACKPANEL PRO
+                </h1>
+                <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">
+                  Next-Gen Dark Web Social Media Injection Terminal
+                </p>
+              </div>
+              
+              {/* Live Status Indicators */}
+              <div className="flex gap-4 text-xs">
+                <div className="bg-[#0c1a0c] border border-[#00ff66]/40 px-3 py-1.5 rounded flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00ff66] animate-pulse"></span>
+                  <span>SYSTEM: ONLINE</span>
+                </div>
+                <div className="bg-[#0c1a0c] border border-[#00ff66]/40 px-3 py-1.5 rounded flex items-center gap-2">
+                  <span>SECURE PROXY: ACTIVE</span>
+                </div>
+              </div>
+            </header>
+
+            {/* Main Interface Grid */}
+            <main className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-grow">
+              
+              {/* Left Side: Order & Injection Terminal Form (7 cols) */}
+              <div className="lg:col-span-7 flex flex-col gap-6">
+                
+                {/* Live Console Terminal Output */}
+                <div className="bg-[#000] border border-[#00ff66]/30 p-4 rounded text-xs font-mono text-emerald-400/90 shadow-2xl relative overflow-hidden h-36 flex flex-col justify-end">
+                  <div className="absolute top-1 left-2 text-[10px] text-gray-500 uppercase tracking-wider">System Live Terminal Log</div>
+                  <div className="space-y-1">
+                    {terminalLogs.map((log, index) => (
+                      <div key={index} className="truncate">
+                        <span className="text-[#00ff66]/50">&gt;&gt;</span> {log}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Main Order Placement Box */}
+                <div className="bg-[#0a0a0a] border-2 border-[#00ff66]/20 p-5 md:p-6 rounded-lg border-glow transition-all duration-300">
+                  <h2 className="orbitron text-xl font-bold mb-4 flex items-center gap-2 text-white border-b border-[#00ff66]/20 pb-2">
+                    <span className="text-[#00ff66]">&lt;/&gt;</span> NEW EXPLOIT INJECTION
+                  </h2>
+
+                  <form onSubmit={handleOrderSubmit} className="space-y-4">
+                    
+                    {/* Category Selector Buttons */}
+                    <div>
+                      <label className="block text-xs uppercase text-gray-400 mb-2">Target Module Group</label>
+                      <div className="flex flex-wrap gap-2">
+                        {["All", "Instagram", "YouTube", "Telegram", "Gaming"].map((cat) => (
+                          <button
+                            type="button"
+                            key={cat}
+                            onClick={() => {
+                              setSelectedCategory(cat);
+                              const found = SERVICES_DATA.find(s => cat === "All" || s.category === cat);
+                              if (found) setSelectedService(found);
+                            }}
+                            className={`px-3 py-1.5 text-xs rounded border uppercase font-semibold transition-all ${
+                              selectedCategory === cat 
+                                ? "bg-[#00ff66] text-black border-[#00ff66]" 
+                                : "bg-transparent text-[#00ff66] border-[#00ff66]/30 hover:bg-[#00ff66]/10"
+                            }`}
+                          >
+                            {cat}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Service Dropdown Selector */}
+                    <div>
+                      <label className="block text-xs uppercase text-gray-400 mb-1.5">Select Specific Script Payload</label>
+                      <select 
+                        className="w-full bg-[#0d0d0d] border border-[#00ff66]/30 text-[#00ff66] rounded p-2.5 text-sm focus:outline-none focus:border-[#00ff66]"
+                        value={selectedService.id}
+                        onChange={(e) => {
+                          const target = SERVICES_DATA.find(s => s.id === parseInt(e.target.value));
+                          if (target) setSelectedService(target);
+                        }}
+                      >
+                        {filteredServices.map(service => (
+                          <option key={service.id} value={service.id}>
+                            {service.name} — ({service.price}/K)
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Target Link Input Box */}
+                    <div>
+                      <label className="block text-xs uppercase text-gray-400 mb-1.5">Target Destination URL / Username</label>
+                      <input 
+                        type="text"
+                        required
+                        placeholder="https://www.instagram.com/username/ or channel link..."
+                        className="w-full bg-[#0d0d0d] border border-[#00ff66]/30 text-[#00ff66] placeholder-emerald-900/60 rounded p-2.5 text-sm focus:outline-none focus:border-[#00ff66]"
+                        value={link}
+                        onChange={(e) => setLink(e.target.value)}
+                      />
+                    </div>
+
+                    {/* Quantity Selector Slider / Numeric Box */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs uppercase text-gray-400 mb-1.5">Injection Multiplier (Quantity)</label>
+                        <input 
+                          type="number"
+                          min={selectedService.min}
+                          max={selectedService.max}
+                          className="w-full bg-[#0d0d0d] border border-[#00ff66]/30 text-[#00ff66] rounded p-2.5 text-sm focus:outline-none focus:border-[#00ff66]"
+                          value={quantity}
+                          onChange={(e) => setQuantity(parseInt(e.target.value) || 0)}
+                        />
+                        <div className="text-[10px] text-gray-500 mt-1">
+                          Min: {selectedService.min} | Max: {selectedService.max}
+                        </div>
+                      </div>
+
+                      {/* Display Box for dynamically calculated pricing info */}
+                      <div className="bg-[#0f1f12]/40 border border-[#00ff66]/20 rounded p-3 flex flex-col justify-center">
+                        <span className="text-[10px] uppercase text-gray-400">Estimated Resource Charge</span>
+                        <span className="orbitron text-2xl font-bold text-white">
+                          ${(parseFloat(selectedService.price.replace('$', '')) * (quantity / 1000)).toFixed(4)}
+                        </span>
+                        <span className="text-[10px] text-emerald-500 font-sans">Speed Matrix: {selectedService.speed}</span>
+                      </div>
+                    </div>
+
+                    {/* Form Execution Action Button */}
+                    <button 
+                      type="submit" 
+                      className="w-full bg-[#00ff66] text-black hover:bg-[#00cc52] font-bold py-3 px-4 rounded transition-all tracking-wider orbitron uppercase text-sm shadow-[0_0_15px_rgba(0,255,102,0.3)] hover:shadow-[0_0_25px_rgba(0,255,102,0.6)]"
+                    >
+                      🚀 FIRE EXPLOIT INJECTION
+                    </button>
+
+                  </form>
+                </div>
+              </div>
+
+              {/* Right Side: Services Directory Matrix & Successful Injection Output Logs (5 cols) */}
+              <div className="lg:col-span-5 flex flex-col gap-6">
+                
+                {/* Available Network Payload Menu Display */}
+                <div className="bg-[#0a0a0a] border border-[#00ff66]/20 p-4 rounded-lg flex-grow flex flex-col">
+                  <h3 className="orbitron text-sm font-bold text-white tracking-wider mb-3 uppercase border-b border-[#00ff66]/20 pb-1.5 flex justify-between items-center">
+                    <span>📡 ACTIVE BOTNET SERVICES</span>
+                    <span className="text-[11px] text-gray-500 font-mono">Count: {filteredServices.length}</span>
+                  </h3>
+                  
+                  <div className="space-y-2.5 overflow-y-auto max-h-[340px] pr-1">
+                    {filteredServices.map(service => (
+                      <div 
+                        key={service.id}
+                        onClick={() => setSelectedService(service)}
+                        className={`p-2.5 rounded border text-xs transition-all cursor-pointer flex justify-between items-center ${
+                          selectedService.id === service.id 
+                            ? "bg-[#00ff66]/10 border-[#00ff66]" 
+                            : "bg-[#050505] border-[#00ff66]/20 hover:border-[#00ff66]/50"
+                        }`}
+                      >
+                        <div className="space-y-0.5 max-w-[75%]">
+                          <div className="font-bold text-white truncate">{service.name}</div>
+                          <div className="text-[10px] text-gray-400">Delivery Node Bandwidth: {service.speed
+      
